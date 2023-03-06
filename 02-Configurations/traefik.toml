@@ -1,0 +1,27 @@
+# ============== Traefik UI ==================
+[api]
+dashboard = true
+insecure = true
+
+# ============== Enable Logging ==============
+[log]
+level = "INFO"
+
+# ============== Set Providers ===============
+# Set the providers
+[providers]
+# Configure the Docker provider
+[providers.docker]
+watch = true            # Enable watch for traefik to automatically detect new containers
+exposedByDefault = true # We don't want to expose all containers by default
+swarmMode = false       # We don't want to use swarm mode
+
+# ============== Set Entrypoints =============
+# Set the entrypoints
+[entryPoints]
+# Configure the `web` entrypoint - NOTE: This `web` is a user defined name. It can be anything.
+[entryPoints.web]
+address = ":80" # Set the address to listen on
+# Configure the `websecure` entrypoint - NOTE: This `websecure` is a user defined name. It can be anything.
+[entryPoints.websecure]
+address = ":443" # Set the address to listen on

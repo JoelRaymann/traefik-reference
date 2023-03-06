@@ -1,0 +1,34 @@
+# Configure traefik to use file based configuration and to use the docker provider
+version: '3'
+
+services:
+  traefik:
+    # The latest official Traefik docker image
+    # Enables the web UI and tells Traefik to listen to docker
+    image: traefik:v2.9
+    # Open HTTP port and web UI Port
+    ports:
+      # Expose HTTP port
+      - "80:80"
+      - "443:443"
+      # Expose Traefik dashboard
+      - "8080:8080"
+    # Link to the docker socket so that Traefik can listen to the events
+    # Also, link to the configuration file
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock
+      # Traefik configuration file
+      - ./traefik.toml:/etc/traefik/traefik.toml
+
+  catapp:
+    # This is a test app that displays cats
+    image: mikesir87/cats:1.0
+    # We need to add the following labels to tell Traefik how to handle the service
+    # ports:
+    #   - "5000:5000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.catapp.rule=Host(`catapp.localhost`)"
+      - "traefik.http.routers.catapp.entrypoints=web"
+      - "traefik.http.services.catapp.loadbalancer.server.port=5000"

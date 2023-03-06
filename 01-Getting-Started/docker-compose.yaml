@@ -1,0 +1,35 @@
+version: '3'
+services:
+  traefik:
+    # The latest version of Traefik
+    image: traefik:latest
+    # Enables the Dashboard web UI and tells Traefik to listen to docker
+    # Enabling log level to INFO to see more logs in the console
+    command: --api.insecure=true --providers.docker --log.level=INFO
+    # Expose the HTTP and the 8080 port for the Dashboard Web UI
+    ports:
+      # Exposing HTTP Port for incoming web request to whoami service
+      - "80:80"
+      # Exposing 8080 Port for Traefik Dashboard Web UI
+      - "8080:8080"
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock
+      # # Traefik configuration file
+      # - ./traefik.toml:/etc/traefik/traefik.toml
+
+  whoami:
+    # Add an whoami service to test the routing
+    # A container that exposes an API to show its IP address
+    image: containous/whoami
+    # Enable Traefik to listen to the whoami service by
+    # adding the following labels
+    labels:
+      # Enable Traefik to listen to the whoami service
+      - "traefik.enable=true"
+      # Define the HTTP entry point for the whoami service
+      - "traefik.http.routers.whoami.entrypoints=http"
+      # Define the rule to route the incoming request to the whoami service
+      - "traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)"
+      # Define the service for the whoami service
+      - "traefik.http.services.whoami.loadbalancer.server.port=80"
