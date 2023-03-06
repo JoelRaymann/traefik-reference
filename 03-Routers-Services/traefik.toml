@@ -1,0 +1,18 @@
+[api]
+dashboard = true
+insecure = true
+
+[log]
+level = "info"
+
+[providers]
+[providers.docker]
+watch = true
+swarmMode = false
+exposedByDefault = false
+
+[entryPoints]
+[entryPoints.web]
+address = ":80"
+[entryPoints.websecure]
+address = ":443"
