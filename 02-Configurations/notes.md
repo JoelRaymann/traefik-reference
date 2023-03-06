@@ -6,7 +6,7 @@
 
 - Dynamic configurations is just as the name suggests **DYNAMIC**. This Dynamic defines how all your requests are handled and hot-reloaded anytime there are changes.
 
-## ## Static Configuration
+## Static Configuration
 
 There are three ways to set this one:
 
@@ -26,7 +26,7 @@ NOTE: You are allowed to choose only one option from above. You CANNOT mix and m
 
 - This is how we did in the previous `docker-compose` method. This method is preferred if you like to keep everything in the same file - in this case, it is in the same docker-compose file. An example of this would be:
 
-![](C:\Users\JoelRaymann\AppData\Roaming\marktext\images\2023-03-06-10-59-03-image.png)
+![](notes-assets\2023-03-06-10-59-03-image.png)
 
 - We can see that those commands marked with red box are all the CLI commands.
 
@@ -34,7 +34,7 @@ NOTE: You are allowed to choose only one option from above. You CANNOT mix and m
 
 - This is same as CLI arguments except you will send it as environment variables to Docker containers. This is extremely useful if you wish to modify or control variables with Infrastructure as Code (IaC).
 
-![](C:\Users\JoelRaymann\AppData\Roaming\marktext\images\2023-03-06-11-09-24-image.png)
+![](notes-assets\2023-03-06-11-09-24-image.png)
 
 ## Static Configuration - File based
 
@@ -99,7 +99,6 @@ services:
 - Certainly, I am confused with the TOML file. How about YAML?
 
 ```yaml
-
 # ============== TRAEFIK API ==================
 api:
   dashboard: true
@@ -186,8 +185,6 @@ entryPoints:
   websecure:
     # Configure the `websecure` entrypoint
     address: ":443"
-
-
 ```
 
 The docker compose would be as follows:
@@ -227,15 +224,13 @@ services:
       - "traefik.http.routers.catapp.rule=Host(`catapp.localhost`)"
       - "traefik.http.routers.catapp.entrypoints=web"
       - "traefik.http.services.catapp.loadbalancer.server.port=5000"
-
-
 ```
 
 ## Dynamic Configs - Routers, Middlewares & Services
 
 - Dynamic configs are provided by the provider themselves.
 
-![](C:\Users\JoelRaymann\AppData\Roaming\marktext\images\2023-03-06-13-41-06-image.png)
+![](notes-assets\2023-03-06-13-41-06-image.png)
 
 - We add the label to the container and we can config the container to have those configuration to the service.
 
@@ -247,6 +242,4 @@ services:
   
   - Update config for the service
 
-![](C:\Users\JoelRaymann\AppData\Roaming\marktext\images\2023-03-06-13-42-50-image.png)
-
-
+![](notes-assets\2023-03-06-13-42-50-image.png)

@@ -13,8 +13,11 @@
 ### 1. Starting the Traefik Dashboard
 
 - We will link traefik to docker so that traefik can listen to new services booting in our docker. To do so, we will have to explicitly tell traefik the provider using the `--providers.docker` command.
+
 - We can also enable logging and dashboard of traefik using the command `--log.level=INFO`.
+
 - Finally, we are only focused on HTTP for the time being, so we will be using the `--api.insecure=true` command as well.
+
 - The docker service for traefik will look something like this:
   
   ```yaml
@@ -37,7 +40,9 @@
       # Traefik configuration file
       - ./traefik.toml:/etc/traefik/traefik.toml
   ```
+
 - Did you notice the volumes? Well, the first volume is a must as it is needed for traefik to listen to docker provider.
+
 - The second one is for the configuration file. If we have a configuration file as a provider for traefik, we would like to give it to traefik as such.
 
 ### 2. Starting the Whoami Service:
@@ -75,18 +80,16 @@
 
 - The service is running. We can check this at http://whoami.docker.localhost/ . 
 
-![](C:\Users\JoelRaymann\AppData\Roaming\marktext\images\2023-03-06-10-33-39-image.png)
+![](notes-assets\2023-03-06-10-33-39-image.png)
 
 ### Load balancing Whoami Services
 
-![](C:\Users\JoelRaymann\AppData\Roaming\marktext\images\2023-03-06-10-34-38-image.png)
+![](notes-assets\2023-03-06-10-34-38-image.png)
 
 - Currently, we are going to scale the single `whoami` instance into 3 instances using the docker-compose command.
 
 - The loadbalancing method used by default is using the `round-robin` method (Refer round robin in Operating Systems Books).
 
-![](C:\Users\JoelRaymann\AppData\Roaming\marktext\images\2023-03-06-10-36-25-image.png)
+![](notes-assets\2023-03-06-10-36-25-image.png)
 
 - All we need to do for this is to just tell docker-compose to scale the `whoami` instance to 3 using the flag `--scale`. Traefik automatically detects this and accomodates accordingly.
-
-

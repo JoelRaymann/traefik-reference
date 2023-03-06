@@ -1,6 +1,6 @@
 # Routers & Services
 
-![](C:\Users\JoelRaymann\AppData\Roaming\marktext\images\2023-03-06-13-47-10-image.png)
+![](notes-assets\2023-03-06-13-47-10-image.png)
 
 ## Load Balancing & Routing
 
@@ -22,12 +22,28 @@
 
 - Let's take a look at how the Traefik labels are constructed
 
-![](C:\Users\JoelRaymann\AppData\Roaming\marktext\images\2023-03-06-13-53-19-image.png)
+![](notes-assets\2023-03-06-13-53-19-image.png)
 
 ### Router Rules
 
-![](C:\Users\JoelRaymann\AppData\Roaming\marktext\images\2023-03-06-13-54-17-image.png)
+![](notes-assets\2023-03-06-13-54-17-image.png)
 
 - Note that when a new rule is created, Traefik automatically creates a corresponding service and router if not provided.
 
 - The service automatically gets a server per instance of the container and the router automatically gets a rule defined by defaultRule (if no rule for it was defined in labels)
+
+### Router Entrypoints
+
+![](notes-assets\2023-03-06-13-59-08-image.png)
+
+- All routers **WILL** accept all requests from all defined **Entrypoints**. Using a label can determine specific routers if required.
+
+### Available Router Configs
+
+![](notes-assets\2023-03-06-14-00-19-image.png)
+
+![](notes-assets\2023-03-06-14-02-00-image.png)
+
+```
+
+```
