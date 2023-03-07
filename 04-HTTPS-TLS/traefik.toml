@@ -1,0 +1,28 @@
+[api]
+dashboard = true
+insecure = true
+
+[log]
+level = "INFO"
+
+[providers]
+[providers.docker]
+watch = true
+swarmMode = false
+exposedByDefault = false
+
+[entryPoints]
+[entryPoints.web]
+address = ":80"
+[entryPoints.websecure]
+address = ":443"
+
+
+# CERTIFICATES RESOLVERS
+[certificatesResolvers]
+[certificatesResolvers.myresolver]
+[certificatesResolvers.myresolver.acme]
+email = "youremail@email.com"
+storage = "acme.json"
+[certificatesResolvers.myresolver.acme.httpChallenge]
+entryPoint = "web"

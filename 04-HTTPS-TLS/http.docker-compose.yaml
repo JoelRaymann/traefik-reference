@@ -1,0 +1,23 @@
+version: '3'
+services:
+  traefik:
+    image: traefik:v2.9
+    ports:
+      - "80:80"
+      - "443:443"
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik.toml:/etc/traefik/traefik.toml
+      # Include certificates
+      - ./letsencrypt:/letsencrypt
+
+  catapp:
+    image: mikesir87/cats:latest
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.catapp.rule=Host(`<your domain name>`)"
+      - "traefik.http.routers.catapp.entrypoints=websecure"
+      - "traefik.http.routers.catapp.tls.certresolver=myresolver"
+      - "traefik.http.routers.catapp.service=catapp"
+      - "traefik.http.services.catapp.loadbalancer.server.port=5000"
